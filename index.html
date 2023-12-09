@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+    <label>Choose an activity:</label>
+
+    <select name="activity" id="activity">
+        <option value=none>none</option>
+        <option value=education>education</option>
+        <option value=recreational>recreational</option>
+        <option value=social>social</option>
+        <option value=diy>diy</option>
+    </select>
+
+    <button type="button" onclick="confirm()" id = "confirm" >Let's have fun</button>
+    </div>
+
+   <p id="outputParagraph"></p>
+
+</body>
+<script>
+    async function confirm(){
+    const activity = document.getElementById("activity").value;
+    var url = "http://www.boredapi.com/api/activity/";
+    if (activity !== "none") {
+        url = url.substring(0, url.length -1) + "?type="  + activity;
+    }
+    console.log(url);
+
+    const response = await fetch(url);
+    const activityData = await response.json();
+    const paragraph = document.getElementById("outputParagraph");
+    paragraph.textContent = (activityData.activity + "\n" + activityData.accessibility + "\n" + activityData.type + "\n" + activityData.participants + "\n" + activityData.price);
+    //document.getElementById("outputContainer").appendChild(paragraph);
+    //console.log(activityData);
+
+
+
+    //console.log(activity.value);
+    //console.log(typeof activity.value);
+    }
+
+</script>
+</html>
