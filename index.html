@@ -3,47 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Activity Finder</title>
+    <style>
+        /* Add your CSS styling here */
+    </style>
 </head>
 <body>
+    <header>
+        <h1>Welcome to Activity Finder</h1>
+        <p>
+            Fighting boredom and promoting mental well-being in challenging times. Discover activities that can enrich your day and uplift your spirits.
+            <button id="readMore" onclick="location.href='details.html'">Read More</button>
+        </p>
+    </header>
+
     <div>
-    <label>Choose an activity:</label>
-
-    <select name="activity" id="activity">
-        <option value=none>none</option>
-        <option value=education>education</option>
-        <option value=recreational>recreational</option>
-        <option value=social>social</option>
-        <option value=diy>diy</option>
-    </select>
-
-    <button type="button" onclick="confirm()" id = "confirm" >Let's have fun</button>
+        <label>Choose an activity:</label>
+        <select name="activity" id="activity">
+            <option value="none">none</option>
+            <option value="education">education</option>
+            <option value="recreational">recreational</option>
+            <option value="social">social</option>
+            <option value="diy">diy</option>
+            <option value="charity">charity</option>
+            <option value="cooking">cooking</option>
+            <option value="relaxation">relaxation</option>
+            <option value="music">music</option>
+            <option value="busywork">busywork</option>
+        </select>
+        <button type="button" onclick="confirmActivity()">Let's have fun</button>
     </div>
 
-   <p id="outputParagraph"></p>
+    <div id="outputParagraph"></div>
 
+    <script>
+        async function confirmActivity() {
+            const activity = document.getElementById("activity").value;
+            let url = "http://www.boredapi.com/api/activity/";
+            if (activity !== "none") {
+                url += "?type=" + activity;
+            }
+            console.log(url);
+
+            try {
+                const response = await fetch(url);
+                const activityData = await response.json();
+                displayActivityData(activityData);
+            } catch (error) {
+                console.error('Error fetching activity data:', error);
+            }
+        }
+
+        function displayActivityData(activityData) {
+            const paragraph = document.getElementById("outputParagraph");
+            paragraph.innerHTML = `
+                <h2>Activity Details</h2>
+                <p><strong>Activity:</strong> ${activityData.activity}</p>
+                <p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>
+                <p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)} (${activityData.accessibility.toFixed(2)} / 1.0)</p>
+                <p><strong>Participants:</strong> ${activityData.participants} person(s)</p>
+                <p><strong>Price:</strong> ${translatePrice(activityData.price)} (${activityData.price.toFixed(2)} / 1.0)</p>
+            `;
+        }
+
+        function translateAccessibility(accessibility) {
+            if (accessibility <= 0.2) return "Very Easy";
+            if (accessibility <= 0.4) return "Easy";
+            if (accessibility <= 0.6) return "Moderate";
+            if (accessibility <= 0.8) return "Challenging";
+            return "Very Challenging";
+        }
+
+        function translatePrice(price) {
+            if (price === 0) return "Free";
+            if (price <= 0.2) return "Inexpensive";
+            if (price <= 0.4) return "Moderately Priced";
+            if (price <= 0.6) return "Expensive";
+            return "Very Expensive";
+        }
+    </script>
 </body>
-<script>
-    async function confirm(){
-    const activity = document.getElementById("activity").value;
-    var url = "http://www.boredapi.com/api/activity/";
-    if (activity !== "none") {
-        url = url.substring(0, url.length -1) + "?type="  + activity;
-    }
-    console.log(url);
-
-    const response = await fetch(url);
-    const activityData = await response.json();
-    const paragraph = document.getElementById("outputParagraph");
-    paragraph.textContent = (activityData.activity + "\n" + activityData.accessibility + "\n" + activityData.type + "\n" + activityData.participants + "\n" + activityData.price);
-    //document.getElementById("outputContainer").appendChild(paragraph);
-    //console.log(activityData);
-
-
-
-    //console.log(activity.value);
-    //console.log(typeof activity.value);
-    }
-
-</script>
 </html>

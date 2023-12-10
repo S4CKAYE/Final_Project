@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More About Our Mission</title>
+    <style>
+        /* CSS styling */
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Understanding the Impact of Boredom on Mental Health</h1>
+    </header>
+
+    <div>
+        <p>
+            The COVID-19 pandemic has significantly affected mental health worldwide, with boredom emerging as a key
+            issue. Prolonged boredom, especially during lockdowns, can lead to depression and anxiety. In sub-Saharan
+            Africa, studies found a significant percentage of people experienced heightened levels of boredom,
+            correlating with increased mental health symptoms. Prolonged boredom has been linked to more serious mental
+            health issues, including depression. Addressing boredom is crucial for supporting mental health and
+            preventing the escalation into conditions like depression. (Source: Langsi et al., 2021; Coetzee et al.,
+            2022)
+        </p>
+    </div>
+
+    <section id="depressionApiContent">
+        <h2>Insights on Depression</h2>
+        <div id="depressionDetails"></div>
+    </section>
+
+    <button onclick="window.history.back()">Go Back</button>
+</body>
+<script>
+    async function loadDepressionData() {
+        var data = sessionStorage.getItem('depressionData');
+
+  
+        if (data===null) {
+            const apiUrl = 'https://health.gov/myhealthfinder/api/v3/topicsearch.json?TopicId=540';
+            try {
+                const response = await fetch(apiUrl);
+                data = await response.json();
+                sessionStorage.setItem('depressionData', JSON.stringify(data));
+            } catch (error) {
+                console.error('Error fetching depression data:', error);
+            }
+        }
+        else {
+            data = JSON.parse(data);
+        }
+        displayDepressionData(data);
+
+    }
+    function displayDepressionData(data) {
+        const container = document.getElementById('depressionDetails');
+        const title = data.Result.Resources.Resource[0].Title;
+        const content = data.Result.Resources.Resource[0].Sections.section[0].Content;
+        container.innerHTML = `<h3>${title}</h3><p>${content}</p>`;
+    }
+    window.onload = loadDepressionData;
+
+</script>
+</body>
+
+</html>
