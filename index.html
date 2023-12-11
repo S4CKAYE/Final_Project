@@ -146,8 +146,11 @@
 
             paragraph.innerHTML = `
                 <h2>Activity Details</h2>
-                <p><strong>Activity:</strong> ${activityData.activity}</p>
-                <p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
+                <p><strong>Activity:</strong> ${activityData.activity}</p>`
+            if (document.getElementById("activity").value === 'none') {
+                paragraph.innerHTML += `<p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>`;
+            }
+            paragraph.innerHTML += `<p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
                 <p><strong>Participants:</strong> ${activityData.participants} person(s)</p>
                 <p><strong>Price:</strong> ${translatePrice(activityData.price)}</p>
                 <img src="${imageUrl}" alt="${activityData.type} Image" style="max-width: 100%; height: auto;">
