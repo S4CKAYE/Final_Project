@@ -6,7 +6,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>More About Our Mission</title>
     <style>
-        /* CSS styling */
+        body {
+            /* CSS styling */
+
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+
+        div {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        section {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 15px;
+        }
+
+        h3 {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
     </style>
 </head>
 
@@ -38,8 +110,8 @@
     async function loadDepressionData() {
         var data = sessionStorage.getItem('depressionData');
 
-  
-        if (data===null) {
+
+        if (data === null) {
             const apiUrl = 'https://health.gov/myhealthfinder/api/v3/topicsearch.json?TopicId=540';
             try {
                 const response = await fetch(apiUrl);

@@ -1,18 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Activity Finder</title>
     <style>
         /* Add your CSS styling here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        div {
+            text-align: center;
+            margin: 20px;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        button[type="button"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button[type="button"]:hover {
+            background-color: #2980b9;
+        }
+
+        #outputParagraph {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
     </style>
 </head>
+
 <body>
     <header>
         <h1>Welcome to Activity Finder</h1>
         <p>
-            Fighting boredom and promoting mental well-being in challenging times. Discover activities that can enrich your day and uplift your spirits.
+            Fighting boredom and promoting mental well-being in challenging times. Discover activities that can enrich
+            your day and uplift your spirits.
             <button id="readMore" onclick="location.href='details.html'">Read More</button>
         </p>
     </header>
@@ -83,4 +158,5 @@
         }
     </script>
 </body>
+
 </html>
