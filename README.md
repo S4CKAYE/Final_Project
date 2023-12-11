@@ -17,7 +17,7 @@ Activity Finder is a straightforward web tool designed to provide users with a v
 
 ## Usage
 
-1. Open your web browser and navigate to [Activity Finder](https://Qwenty228/github.io/Final_Project/).
+1. Open your web browser and navigate to [Activity Finder](https://qwenty228.github.io/Final_Project/).
 2. Choose an activity category from the dropdown menu.
 3. Click the "Let's have fun" button to discover a random activity.
 4. Explore detailed information and themed images associated with the selected activity.
