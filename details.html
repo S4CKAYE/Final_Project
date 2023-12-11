@@ -79,6 +79,14 @@
         button:hover {
             background-color: #27ae60;
         }
+
+        #spin-area {
+            margin-top: 20px;
+            height: 100px;
+            width: 100px;
+            background-color: #FFF;
+            border-radius: 3px;
+        }
     </style>
 </head>
 
@@ -103,7 +111,6 @@
         <h2>Insights on Depression</h2>
         <div id="depressionDetails"></div>
     </section>
-
     <button onclick="window.history.back()">Go Back</button>
 </body>
 <script>
@@ -113,12 +120,21 @@
 
         if (data === null) {
             const apiUrl = 'https://health.gov/myhealthfinder/api/v3/topicsearch.json?TopicId=540';
+            const spin = document.createElement('div');
+            spin.align = 'center';
+          
             try {
+                spin.innerHTML = '<img src="https://media.tenor.com/uavcI76SzpUAAAAi/loading-buffering.gif" alt="Loading..." />';
+                document.getElementById('depressionApiContent').appendChild(spin);
                 const response = await fetch(apiUrl);
                 data = await response.json();
                 sessionStorage.setItem('depressionData', JSON.stringify(data));
+             
             } catch (error) {
                 console.error('Error fetching depression data:', error);
+            }
+            finally {
+                document.getElementById('depressionApiContent').removeChild(spin);
             }
         }
         else {

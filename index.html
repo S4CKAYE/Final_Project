@@ -95,7 +95,7 @@
     <div>
         <label>Choose an activity:</label>
         <select name="activity" id="activity">
-            <option value="none">none</option>
+            <option value="none">random</option>
             <option value="education">education</option>
             <option value="recreational">recreational</option>
             <option value="social">social</option>
@@ -112,9 +112,20 @@
     <div id="outputParagraph"></div>
 
     <script>
+        const activityImages = {
+            education: "https://static.businessworld.in/article/article_extra_large_image/1609408538_PAOVe5_Books.jpg",
+            recreational: 'https://rivercityrecbowling.net/wp-content/uploads/2022/01/071818-sports-equipment-recreation-gym-fitness-adobestock_190038155.jpeg',
+            social: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K_ucZ8Hfdga6fHH9QKTXIEJxP0ljxbPKYw&usqp=CAU',
+            diy: 'https://freerangestock.com/sample/77153/photo.jpg',
+            charity: 'https://todaysparent.mblycdn.com/uploads/tp/2019/12/header-charity-entertainment.jpg',
+            cooking: 'https://live.staticflickr.com/593/32545146336_3a198e4cf8_b.jpg',
+            relaxation: 'https://www.aspiretrainingteam.co.uk/wp-content/uploads/2017/12/Relaxation-1.jpg',
+            music: 'https://live.staticflickr.com/65535/32847899287_ee94aa5aaf_b.jpg',
+            busywork: 'https://c.pxhere.com/photos/8d/1e/homework_2014_3652014_365the2014edition-394954.jpg!d',
+        };
         async function confirmActivity() {
             const activity = document.getElementById("activity").value;
-            let url = "http://www.boredapi.com/api/activity/";
+            let url = "https://www.boredapi.com/api/activity/";
             if (activity !== "none") {
                 url += "?type=" + activity;
             }
@@ -131,13 +142,15 @@
 
         function displayActivityData(activityData) {
             const paragraph = document.getElementById("outputParagraph");
+            const imageUrl = activityImages[activityData.type];
+
             paragraph.innerHTML = `
                 <h2>Activity Details</h2>
                 <p><strong>Activity:</strong> ${activityData.activity}</p>
-                <p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>
-                <p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)} (${activityData.accessibility.toFixed(2)} / 1.0)</p>
+                <p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
                 <p><strong>Participants:</strong> ${activityData.participants} person(s)</p>
-                <p><strong>Price:</strong> ${translatePrice(activityData.price)} (${activityData.price.toFixed(2)} / 1.0)</p>
+                <p><strong>Price:</strong> ${translatePrice(activityData.price)}</p>
+                <img src="${imageUrl}" alt="${activityData.type} Image" style="max-width: 100%; height: auto;">
             `;
         }
 
