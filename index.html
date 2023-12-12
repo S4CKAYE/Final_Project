@@ -1,49 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Activity Finder</title>
+    <style>
+        /* Add your CSS styling here */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        header {
+            background-color: #3498db;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        p {
+            font-size: 1.2em;
+        }
+
+        button {
+            background-color: #2ecc71;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #27ae60;
+        }
+
+        div {
+            text-align: center;
+            margin: 20px;
+        }
+
+        label {
+            font-size: 1.2em;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 10px;
+            font-size: 1em;
+        }
+
+        button[type="button"] {
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+
+        button[type="button"]:hover {
+            background-color: #2980b9;
+        }
+
+        #outputParagraph {
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
+
 <body>
+    <header>
+        <h1>Welcome to Activity Finder</h1>
+        <p>
+            Fighting boredom and promoting mental well-being in challenging times. Discover activities that can enrich
+            your day and uplift your spirits.
+            <button id="readMore" onclick="location.href='details.html'">Read More</button>
+        </p>
+    </header>
+
     <div>
-    <label>Choose an activity:</label>
-
-    <select name="activity" id="activity">
-        <option value=none>none</option>
-        <option value=education>education</option>
-        <option value=recreational>recreational</option>
-        <option value=social>social</option>
-        <option value=diy>diy</option>
-    </select>
-
-    <button type="button" onclick="confirm()" id = "confirm" >Let's have fun</button>
+        <label>Choose an activity:</label>
+        <select name="activity" id="activity">
+            <option value="none">random</option>
+            <option value="education">education</option>
+            <option value="recreational">recreational</option>
+            <option value="social">social</option>
+            <option value="diy">diy</option>
+            <option value="charity">charity</option>
+            <option value="cooking">cooking</option>
+            <option value="relaxation">relaxation</option>
+            <option value="music">music</option>
+            <option value="busywork">busywork</option>
+        </select>
+        <button type="button" onclick="confirmActivity()">Let's have fun</button>
     </div>
 
-   <p id="outputParagraph"></p>
-
+    <div id="outputParagraph"></div>
 </body>
+
 <script>
-    async function confirm(){
-    const activity = document.getElementById("activity").value;
-    var url = "http://www.boredapi.com/api/activity/";
-    if (activity !== "none") {
-        url = url.substring(0, url.length -1) + "?type="  + activity;
+    const activityImages = {
+        education: "https://static.businessworld.in/article/article_extra_large_image/1609408538_PAOVe5_Books.jpg",
+        recreational: 'https://rivercityrecbowling.net/wp-content/uploads/2022/01/071818-sports-equipment-recreation-gym-fitness-adobestock_190038155.jpeg',
+        social: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K_ucZ8Hfdga6fHH9QKTXIEJxP0ljxbPKYw&usqp=CAU',
+        diy: 'https://freerangestock.com/sample/77153/photo.jpg',
+        charity: 'https://todaysparent.mblycdn.com/uploads/tp/2019/12/header-charity-entertainment.jpg',
+        cooking: 'https://live.staticflickr.com/593/32545146336_3a198e4cf8_b.jpg',
+        relaxation: 'https://www.aspiretrainingteam.co.uk/wp-content/uploads/2017/12/Relaxation-1.jpg',
+        music: 'https://live.staticflickr.com/65535/32847899287_ee94aa5aaf_b.jpg',
+        busywork: 'https://c.pxhere.com/photos/8d/1e/homework_2014_3652014_365the2014edition-394954.jpg!d',
+    };
+    async function confirmActivity() {
+        const activity = document.getElementById("activity").value;
+        let url = "https://www.boredapi.com/api/activity/";
+        if (activity !== "none") {
+            url += "?type=" + activity;
+        }
+        try {
+            const response = await fetch(url);
+            const activityData = await response.json();
+            displayActivityData(activityData);
+
+        } catch (error) {
+            // console.error('Error fetching activity data:', error);
+            const container = document.getElementById("outputParagraph");
+            container.textContent = `Sorry, an error occurred. Please try again later.
+            ${error}`;
+        }
     }
-    console.log(url);
 
-    const response = await fetch(url);
-    const activityData = await response.json();
-    const paragraph = document.getElementById("outputParagraph");
-    paragraph.textContent = (activityData.activity + "\n" + activityData.accessibility + "\n" + activityData.type + "\n" + activityData.participants + "\n" + activityData.price);
-    //document.getElementById("outputContainer").appendChild(paragraph);
-    //console.log(activityData);
+    function displayActivityData(activityData) {
+        const container = document.getElementById("outputParagraph");
+        const imageUrl = activityImages[activityData.type];
 
-
-
-    //console.log(activity.value);
-    //console.log(typeof activity.value);
+        container.innerHTML = `
+                <h2>Activity Details</h2>
+                <p><strong>Activity:</strong> ${activityData.activity}</p>`
+        if (document.getElementById("activity").value === 'none') {
+            container.innerHTML += `<p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>`;
+        }
+        container.innerHTML += `<p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
+                <p><strong>Participants:</strong> ${activityData.participants} person(s)</p>
+                <p><strong>Price:</strong> ${translatePrice(activityData.price)}</p>
+                <img src="${imageUrl}" alt="${activityData.type} Image" style="max-width: 100%; height: auto;">
+            `;
     }
 
+    function translateAccessibility(accessibility) {
+        if (accessibility <= 0.2) return "Very Easy";
+        if (accessibility <= 0.4) return "Easy";
+        if (accessibility <= 0.6) return "Moderate";
+        if (accessibility <= 0.8) return "Challenging";
+        return "Very Challenging";
+    }
+
+    function translatePrice(price) {
+        if (price === 0) return "Free";
+        if (price <= 0.2) return "Inexpensive";
+        if (price <= 0.4) return "Moderately Priced";
+        if (price <= 0.6) return "Expensive";
+        return "Very Expensive";
+    }
 </script>
+
 </html>
