@@ -130,9 +130,12 @@
                 const response = await fetch(apiUrl);
                 data = await response.json();
                 sessionStorage.setItem('depressionData', JSON.stringify(data));
-
             } catch (error) {
-                console.error('Error fetching depression data:', error);
+                // console.error('Error fetching depression data:', error);
+                const container = document.getElementById("depressionApiContent");
+                container.textContent = `Sorry, an error occurred. Please try again later.
+            ${error}`;
+            return;
             }
             finally {
                 document.getElementById('depressionApiContent').removeChild(spin);

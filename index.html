@@ -111,6 +111,7 @@
 
     <div id="outputParagraph"></div>
 </body>
+
 <script>
     const activityImages = {
         education: "https://static.businessworld.in/article/article_extra_large_image/1609408538_PAOVe5_Books.jpg",
@@ -129,28 +130,30 @@
         if (activity !== "none") {
             url += "?type=" + activity;
         }
-        console.log(url);
-
         try {
             const response = await fetch(url);
             const activityData = await response.json();
             displayActivityData(activityData);
+
         } catch (error) {
-            console.error('Error fetching activity data:', error);
+            // console.error('Error fetching activity data:', error);
+            const container = document.getElementById("outputParagraph");
+            container.textContent = `Sorry, an error occurred. Please try again later.
+            ${error}`;
         }
     }
 
     function displayActivityData(activityData) {
-        const paragraph = document.getElementById("outputParagraph");
+        const container = document.getElementById("outputParagraph");
         const imageUrl = activityImages[activityData.type];
 
-        paragraph.innerHTML = `
+        container.innerHTML = `
                 <h2>Activity Details</h2>
                 <p><strong>Activity:</strong> ${activityData.activity}</p>`
         if (document.getElementById("activity").value === 'none') {
-            paragraph.innerHTML += `<p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>`;
+            container.innerHTML += `<p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>`;
         }
-        paragraph.innerHTML += `<p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
+        container.innerHTML += `<p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
                 <p><strong>Participants:</strong> ${activityData.participants} person(s)</p>
                 <p><strong>Price:</strong> ${translatePrice(activityData.price)}</p>
                 <img src="${imageUrl}" alt="${activityData.type} Image" style="max-width: 100%; height: auto;">
@@ -173,6 +176,5 @@
         return "Very Expensive";
     }
 </script>
-
 
 </html>
