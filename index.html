@@ -110,69 +110,69 @@
     </div>
 
     <div id="outputParagraph"></div>
-
-    <script>
-        const activityImages = {
-            education: "https://static.businessworld.in/article/article_extra_large_image/1609408538_PAOVe5_Books.jpg",
-            recreational: 'https://rivercityrecbowling.net/wp-content/uploads/2022/01/071818-sports-equipment-recreation-gym-fitness-adobestock_190038155.jpeg',
-            social: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K_ucZ8Hfdga6fHH9QKTXIEJxP0ljxbPKYw&usqp=CAU',
-            diy: 'https://freerangestock.com/sample/77153/photo.jpg',
-            charity: 'https://todaysparent.mblycdn.com/uploads/tp/2019/12/header-charity-entertainment.jpg',
-            cooking: 'https://live.staticflickr.com/593/32545146336_3a198e4cf8_b.jpg',
-            relaxation: 'https://www.aspiretrainingteam.co.uk/wp-content/uploads/2017/12/Relaxation-1.jpg',
-            music: 'https://live.staticflickr.com/65535/32847899287_ee94aa5aaf_b.jpg',
-            busywork: 'https://c.pxhere.com/photos/8d/1e/homework_2014_3652014_365the2014edition-394954.jpg!d',
-        };
-        async function confirmActivity() {
-            const activity = document.getElementById("activity").value;
-            let url = "https://www.boredapi.com/api/activity/";
-            if (activity !== "none") {
-                url += "?type=" + activity;
-            }
-            console.log(url);
-
-            try {
-                const response = await fetch(url);
-                const activityData = await response.json();
-                displayActivityData(activityData);
-            } catch (error) {
-                console.error('Error fetching activity data:', error);
-            }
+</body>
+<script>
+    const activityImages = {
+        education: "https://static.businessworld.in/article/article_extra_large_image/1609408538_PAOVe5_Books.jpg",
+        recreational: 'https://rivercityrecbowling.net/wp-content/uploads/2022/01/071818-sports-equipment-recreation-gym-fitness-adobestock_190038155.jpeg',
+        social: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K_ucZ8Hfdga6fHH9QKTXIEJxP0ljxbPKYw&usqp=CAU',
+        diy: 'https://freerangestock.com/sample/77153/photo.jpg',
+        charity: 'https://todaysparent.mblycdn.com/uploads/tp/2019/12/header-charity-entertainment.jpg',
+        cooking: 'https://live.staticflickr.com/593/32545146336_3a198e4cf8_b.jpg',
+        relaxation: 'https://www.aspiretrainingteam.co.uk/wp-content/uploads/2017/12/Relaxation-1.jpg',
+        music: 'https://live.staticflickr.com/65535/32847899287_ee94aa5aaf_b.jpg',
+        busywork: 'https://c.pxhere.com/photos/8d/1e/homework_2014_3652014_365the2014edition-394954.jpg!d',
+    };
+    async function confirmActivity() {
+        const activity = document.getElementById("activity").value;
+        let url = "https://www.boredapi.com/api/activity/";
+        if (activity !== "none") {
+            url += "?type=" + activity;
         }
+        console.log(url);
 
-        function displayActivityData(activityData) {
-            const paragraph = document.getElementById("outputParagraph");
-            const imageUrl = activityImages[activityData.type];
+        try {
+            const response = await fetch(url);
+            const activityData = await response.json();
+            displayActivityData(activityData);
+        } catch (error) {
+            console.error('Error fetching activity data:', error);
+        }
+    }
 
-            paragraph.innerHTML = `
+    function displayActivityData(activityData) {
+        const paragraph = document.getElementById("outputParagraph");
+        const imageUrl = activityImages[activityData.type];
+
+        paragraph.innerHTML = `
                 <h2>Activity Details</h2>
                 <p><strong>Activity:</strong> ${activityData.activity}</p>`
-            if (document.getElementById("activity").value === 'none') {
-                paragraph.innerHTML += `<p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>`;
-            }
-            paragraph.innerHTML += `<p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
+        if (document.getElementById("activity").value === 'none') {
+            paragraph.innerHTML += `<p><strong>Type:</strong> ${activityData.type.charAt(0).toUpperCase() + activityData.type.slice(1)}</p>`;
+        }
+        paragraph.innerHTML += `<p><strong>Accessibility:</strong> ${translateAccessibility(activityData.accessibility)}</p>
                 <p><strong>Participants:</strong> ${activityData.participants} person(s)</p>
                 <p><strong>Price:</strong> ${translatePrice(activityData.price)}</p>
                 <img src="${imageUrl}" alt="${activityData.type} Image" style="max-width: 100%; height: auto;">
             `;
-        }
+    }
 
-        function translateAccessibility(accessibility) {
-            if (accessibility <= 0.2) return "Very Easy";
-            if (accessibility <= 0.4) return "Easy";
-            if (accessibility <= 0.6) return "Moderate";
-            if (accessibility <= 0.8) return "Challenging";
-            return "Very Challenging";
-        }
+    function translateAccessibility(accessibility) {
+        if (accessibility <= 0.2) return "Very Easy";
+        if (accessibility <= 0.4) return "Easy";
+        if (accessibility <= 0.6) return "Moderate";
+        if (accessibility <= 0.8) return "Challenging";
+        return "Very Challenging";
+    }
 
-        function translatePrice(price) {
-            if (price === 0) return "Free";
-            if (price <= 0.2) return "Inexpensive";
-            if (price <= 0.4) return "Moderately Priced";
-            if (price <= 0.6) return "Expensive";
-            return "Very Expensive";
-        }
-    </script>
-</body>
+    function translatePrice(price) {
+        if (price === 0) return "Free";
+        if (price <= 0.2) return "Inexpensive";
+        if (price <= 0.4) return "Moderately Priced";
+        if (price <= 0.6) return "Expensive";
+        return "Very Expensive";
+    }
+</script>
+
 
 </html>
